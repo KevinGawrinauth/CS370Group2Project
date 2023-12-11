@@ -36,7 +36,7 @@ public class RandomForest {
 		while(IrisScan.hasNextLine()) {
 			s = IrisScan.nextLine();
 			if(!s.isEmpty()){
-				atr = s.split(";");
+				atr = s.split(",");
 				in = new Iris();
 				in.setSepalLength(Float.parseFloat(atr[0]));
 				in.setSepalWidth(Float.parseFloat(atr[1]));
