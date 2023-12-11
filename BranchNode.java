@@ -4,13 +4,12 @@ import java.io.IOException;
 public class BranchNode implements TreeNode{//internal node
 	private String comparisonAttribute;
 	private Object comparisonValue;
-	//since only 1 categorical attribute with 2 options all nodes only need 2 children
 	protected TreeNode left;
 	protected TreeNode right;
 	
 	TreeNode compare(Iris i) {		
 		int c = 0;
-		if(comparisonAttribute.equals("species")) {
+		if(comparisonAttribute.equals("Iris Species")) {
 			c = (i.getSpecies().compareTo((String) comparisonValue));
 		}
 		else if(i.getByName(comparisonAttribute) != null) {
@@ -19,7 +18,7 @@ public class BranchNode implements TreeNode{//internal node
 			else
 				c = 1;	
 		}
-		//if w.attribute is less than comparisonValue return left
+		//if i.attribute is less than comparisonValue return left
 		if(c < 0)
 			return left;
 		
