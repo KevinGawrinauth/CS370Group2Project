@@ -19,11 +19,11 @@ public class IrisClassifier {
 			IrisScanner = new Scanner(new FileReader("iris.csv"));
         }
 		catch(Exception e) {
-			JOptionPane.showMessageDialog(null,"Iris date set files not found. Program closing."); 
+			JOptionPane.showMessageDialog(null,"Iris data set files not found. Program closing."); 
 			System.exit(1);
 		}
 		
-		RandomForest rf = new RandomForest(5,4,null);
+		RandomForest rf = new RandomForest(10,5,null);
 		rf.loadData(IrisScanner);
 		search = rf.returnSet();
 		
@@ -36,10 +36,10 @@ public class IrisClassifier {
 			System.exit(1);
 		}
 
-		rf.readForest(read);//create forest and all its trees
+		//rf.readForest(read);//create forest and all its trees
 		
-		float defaultVal[] = new float[3];
-		for(int i = 0; i<3; i++){
+		float defaultVal[] = new float[4];
+		for(int i = 0; i<4; i++){
 			defaultVal[i] = 0;
 		}
 
@@ -51,7 +51,7 @@ public class IrisClassifier {
 			defaultVal[3] += search[av].getPetalWidth();
 		}
 		
-		//order of default values is same for string of attributes(excluding color)
+		//order of default values is same for string of attributes(excluding species)
 		defaultVal[0] /= (float)search.length;
 		defaultVal[1] /= (float)search.length;
 		defaultVal[2] /= (float)search.length;
@@ -59,7 +59,8 @@ public class IrisClassifier {
 		
 		//close all files
 		read.close();
-		//GUISwitch wg = new GUISwitch(rf, defaultVal);//open GUI
+		IrisScanner.close();
+		/* GUISwitch wg =  */new GUISwitch(rf, defaultVal);//open GUI
 	}
 	    
 	//find a iris from data set that is similar to passed iris
@@ -77,7 +78,7 @@ public class IrisClassifier {
 			if(q.getSepalLength()-comp <= (search[j].getSepalLength()) && (q.getSepalLength()+comp)>=(search[j].getSepalLength()))
 				sim++;
 
-			comp =(q.getSepalWidth()/10.0f);
+			comp = (q.getSepalWidth()/10.0f);
 			if(q.getSepalWidth()-comp <= (search[j].getSepalWidth()) && (q.getSepalWidth()+comp) >= (search[j].getSepalWidth()))
 				sim++; 
 			
@@ -90,7 +91,7 @@ public class IrisClassifier {
 				sim++;
 
 		
-			if(sim>=4) //if there are at least 4 similarities between iris, return as answer
+			if(sim>=3) //if there are at least 3 similarities between iris, return as answer
 				return search[j];
 			}
 			return null;//no similar iris found
