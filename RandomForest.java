@@ -23,28 +23,38 @@ public class RandomForest {
 		return dataSet;
 	}
 	
-	public void loadData(Scanner Iris) {//given data set is divided into 2 files (1 for red, 1 for white)
+	public void loadData(Scanner IrisScan) {
 		int i = 0;
 		dataSet = new Iris[150];
 		String s;
 		String [] atr;
 		Iris in;
+		String q;
 		//files are csv files, first line is order of attributes
 		//data set has no missing attributes
-		s = Iris.nextLine();
-		while(Iris.hasNextLine()) {
-			s = Iris.nextLine();
-			atr = s.split(",");
-			in = new Iris();
-			in.setSepalLength(Float.parseFloat(atr[1]));
-			in.setSepalWidth(Float.parseFloat(atr[2]));
-			in.setPetalLength(Float.parseFloat(atr[3]));
-			in.setPetalLength(Float.parseFloat(atr[4]));
+		s = IrisScan.nextLine();
+		while(IrisScan.hasNextLine()) {
+			s = IrisScan.nextLine();
+			if(!s.isEmpty()){
+				atr = s.split(";");
+				in = new Iris();
+				in.setSepalLength(Float.parseFloat(atr[0]));
+				in.setSepalWidth(Float.parseFloat(atr[1]));
+				in.setPetalLength(Float.parseFloat(atr[2]));
+				in.setPetalWidth(Float.parseFloat(atr[3]));
 			
-			in.setSpecies(atr[0]);
+				q = (atr[4]);
 			
-			dataSet[i] = in;
-			i++;
+				if(q.equalsIgnoreCase("setosa"))
+					in.setSpecies("setosa");
+				else if(q.equalsIgnoreCase("versicolor"))
+					in.setSpecies("versicolor");
+				else
+					in.setSpecies("virginica");
+
+				dataSet[i] = in;
+				i++;
+			}
 		}	
 		setSize = 150;
 	}
@@ -106,17 +116,24 @@ public class RandomForest {
 		String answer;
 		int class1 = 0;//good
 		int class2 = 0;//bad
+		int class3 = 0;
 		for(int i = 0; i<treeNum; i++) {
 			answer = forest[i].test(I);
-			if(answer.equals("good quality"))
+			if(answer.equals("setosa"))
 				class1++;
-			else
+			else if(answer.equals("versicolor"))
 				class2++;
+			else class3++;
 		}
 		
-		if(class1 > class2)//return majority answer
-			return "good quality";
-		return "bad quality";
+		if(class1 > class2 && class1 > class3)//return majority answer
+			return "setosa";
+		else if(class2 > class1 && class2 > class3)
+			return "versicolor";
+		else if(class3 > class1 && class3 > class2)
+			return "virginica";
+		else
+			return "uncertain";
 	}
 	
 	public void writeForest(BufferedWriter writeF) throws IOException {
@@ -128,14 +145,16 @@ public class RandomForest {
 	public void readForest(Scanner read) {
 		String r = read.nextLine();
 		r = read.nextLine();
-		treeNum = Integer.parseInt(r);
-		forest =  new DecisionTree[treeNum];
-		for(int i = 0; i<treeNum; i++) {
-			forest[i] = new DecisionTree(maxDepth, null, null);
-			
-			r = read.nextLine();//skip empty line
-			forest[i].readTree(read);
-		}
+		if(!r.isEmpty()){
+			treeNum = Integer.parseInt(r);
+			forest =  new DecisionTree[treeNum];
+			for(int i = 0; i<treeNum; i++) {
+				forest[i] = new DecisionTree(maxDepth, null, null);
+				
+				r = read.nextLine();//skip empty line
+				forest[i].readTree(read);
+			}	
+		} 
 	}
 	
 	public Iris getIris() {
