@@ -63,27 +63,33 @@ public class DecisionTree {
 	TreeNode buildingTree(int depth, Iris [] set) {
 		if(depth == maxDepth-1) {//max depth reached
 			DecisionNode n = new DecisionNode();
-			int l = 0, r = 0;
+			int seto = 0, veri = 0, virg = 0;
 			for(int i = 0; i<set.length; i++) {
-				if(set[i].getQuality() > 0)
-					r++;//good
+				if(set[i].getSpecies().equals("setosa"))
+					seto++;
+				else if(set[i].getSpecies().equals("versicolor"))
+					veri++;
 				else
-					l++;//bad
+					virg++;
 			}
-			if(l>r)
-				n.setDecision("bad quality");
-			else
-				n.setDecision("good quality");
+			if(seto > veri && seto > virg)
+				n.setDecision("setosa");
+			else if (veri > seto && veri > virg)
+				n.setDecision("versicolor");
+			else 
+				n.setDecision("virginica");
 			return n;
 		}
 		
 		float giniNoSplit = calculateGini(null,null,set);
 		if(giniNoSplit == 0) {//current set contains 1 class
 			DecisionNode n = new DecisionNode();
-			if(set[0].getQuality() == 0)
-				n.setDecision("bad quality");
+			if(set[0].getSpecies().equals("setosa"))
+				n.setDecision("setosa");
+			else if(set[0].getSpecies().equals("versicolor"))
+				n.setDecision("versicolor");
 			else
-				n.setDecision("good quality");
+				n.setDecision("virginica");
 			
 			return n;
 		}
@@ -95,11 +101,11 @@ public class DecisionTree {
 		int find = 0;
 		if(attribute[0].equals("Iris Species")) {
 			find = 1;
-			giniSplit = calculateGini(attribute[0], "", set);
+			giniSplit = calculateGini(attribute[0], "setosa", set);
 			if(gain < giniNoSplit - giniSplit) {
 				gain = giniNoSplit - giniSplit;
 				chooseSplit = "Iris Species";
-				splitValue = "";
+				splitValue = "setosa";
 			}
 			if(gain == giniNoSplit) {//perfect split
 				find = attributes;
@@ -122,17 +128,21 @@ public class DecisionTree {
 		
 		if(gain == 0.0) {//no better split found
 			DecisionNode d = new DecisionNode();
-			int l = 0, r = 0;
+			int seto = 0, veri = 0, virg = 0;
 			for(int i = 0; i<set.length; i++) {
-				if(set[i].getQuality() > 0)
-					r++;//good
+				if(set[i].getSpecies().equals("setosa"))
+					seto++;
+				else if(set[i].getSpecies().equals("versicolor"))
+					veri++;
 				else
-					l++;//bad
+					virg++;
 			}
-			if(l>r)
-				d.setDecision("bad quality");
-			else
-				d.setDecision("good quality");
+			if(seto > veri && seto > virg)
+				d.setDecision("setosa");
+			else if (veri > seto && veri > virg)
+				d.setDecision("versicolor");
+			else 
+				d.setDecision("virginica");
 			return d;
 		}
 		
@@ -143,9 +153,9 @@ public class DecisionTree {
 		Iris [] right;
 		int side = 0;//amount in left branch
 		
-		for(int check = 0; check<set.length; check++) {//count wines in left and right branch
+		for(int check = 0; check<set.length; check++) {//count iris in left and right branch
 			if(chooseSplit.equals("Iris Species")){
-				if(set[check].getSpecies().equals(""))
+				if(set[check].getSpecies().equals("Species"))
 					side++;
 			}
 			else {
@@ -157,9 +167,9 @@ public class DecisionTree {
 		right = new Iris[set.length - side];
 		
 		int l = 0, r = 0;
-		for(int check = 0; check<set.length; check++) {//assign wines to correct branch
+		for(int check = 0; check<set.length; check++) {//assign iriss to correct branch
 			if(chooseSplit.equals("Iris Species")){
-				if(set[check].getSpecies().equals("red"))
+				if(set[check].getSpecies().equals("setosa"))
 					left[l++] = set[check]; 
 				else
 					right[r++] = set[check];
@@ -185,8 +195,8 @@ public class DecisionTree {
 			int s = set.length;
 			int good = 0;
 			int bad = 0;
-			for(int c = 0; c<s; c++) {//count each good and bad quality wine
-				if(set[c].getQuality() == 1)
+			for(int c = 0; c<s; c++) {//count each good and bad quality iris
+				if(set[c].getSpecies() == "setosa")
 					good++;
 				else
 					bad++;
@@ -202,13 +212,13 @@ public class DecisionTree {
 		for(int i = 0; i<set.length; i++) {
 			if(atr.equals("Iris Species")) {
 				if(set[i].getSpecies().compareTo((String) value) < 0) {
-					if(set[i].getQuality() == 0)
+					if(set[i].getSpecies() == "setosa")
 						leftBad++;
 					else
 						leftGood++;
 				}
 				else {
-					if(set[i].getQuality() == 0)
+					if(set[i].getSpecies() == "versicolor")
 						rightBad++;
 					else
 						rightGood++;
@@ -218,13 +228,13 @@ public class DecisionTree {
 				float getV = (float) set[i].getByName(atr);
 				float cV = (float) value;
 				if(getV < cV) {
-					if(set[i].getQuality() == 0)
+					if(set[i].getSpecies() == "versicolor")
 						leftBad++;
 					else
 						leftGood++;
 				}
 				else {
-					if(set[i].getQuality() == 0)
+					if(set[i].getSpecies() == "versicolor")
 						rightBad++;
 					else
 						rightGood++;
@@ -245,7 +255,7 @@ public class DecisionTree {
 		return (((tL/set.length) * gL) + ((tR/set.length) * gR));
 	}
 	
-	public String test(Iris w) {//test wine through tree
+	public String test(Iris w) {//test iris through tree
 		TreeNode p = root;
 		
 		while(p instanceof BranchNode) {//loop while p has children
