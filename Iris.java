@@ -4,7 +4,6 @@ public class Iris {
 	private Float SepalWidth;
 	private Float PetalLength;
 	private Float PetalWidth;
-	private Integer Quality;
 
 	public String getSpecies() {
 		return Species;
@@ -42,13 +41,9 @@ public class Iris {
 		return PetalWidth;
 	}
 	
-	public void setPetalWidthr(float PetalWidth) {
+	public void setPetalWidth(float PetalWidth) {
 		this.PetalWidth = PetalWidth;
 	}
-
-    public int getQuality() {
-        return Quality;
-    }
 	
 	//get attribute by name
 	public Object getByName(String s) {
