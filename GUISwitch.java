@@ -240,7 +240,7 @@ public class GUISwitch implements ActionListener{
 		outGUI.setLayout(new GridLayout(3,3));
 		outGUI.setSize(699, 499);
 		
-		JTextArea topT = new JTextArea("This classifier has predicted your\n\tIris to be");
+		JTextArea topT = new JTextArea("      This classifier has predicted your\n\tIris to be");
 		topT.setEditable(false);
 		topT.setForeground(Color.WHITE);
 		topT.setBackground(new Color(128, 128, 128));
@@ -258,8 +258,8 @@ public class GUISwitch implements ActionListener{
 		JButton recom = new JButton("Find similar Iris");
 		recom.addActionListener(this);
 		recom.setForeground(Color.WHITE);
-		recom.setBackground(new Color(128, 128, 128));
-		recom.setBorder(new LineBorder (new Color(128, 128, 128)));
+		recom.setBackground(new Color(227, 83, 117));
+		recom.setBorder(new LineBorder (new Color(227, 83, 117)));
 		
 		
 		outGUI.add(new JLabel());
@@ -274,7 +274,7 @@ public class GUISwitch implements ActionListener{
 		
 		similarGUI = new JPanel(new GridLayout(16, 1));
 		similarGUI.setSize(800, 300);
-		similarGUI.setBackground(new Color(128, 128, 128));
+		similarGUI.setBackground(new Color(128, 1280, 128));
 		
 		JLabel disW = new JLabel("A similar Iris has attributes", SwingConstants.CENTER);
 		disW.setForeground(Color.WHITE);
@@ -288,7 +288,7 @@ public class GUISwitch implements ActionListener{
 		get1.setForeground(Color.WHITE);
 	    get1.setBackground(new Color(128, 128, 128));
 	    get1.setBorder(new LineBorder (new Color(0, 0, 0)));;
-		sim1.setBackground(new Color(128, 128, 128));
+		sim1.setBackground(new Color(128, 1280, 128));
 	    sim1.add(lab1);
 		sim1.add(get1);
 		get1.setEditable(false);
