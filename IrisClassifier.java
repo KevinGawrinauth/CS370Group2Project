@@ -60,7 +60,7 @@ public class IrisClassifier {
 		//close all files
 		read.close();
 		IrisScanner.close();
-		/* GUISwitch wg =  */new GUISwitch(rf, defaultVal);//open GUI
+		new GUISwitch(rf, defaultVal);//open GUI
 	}
 	    
 	//find a iris from data set that is similar to passed iris

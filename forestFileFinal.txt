@@ -1,0 +1,40 @@
+Branch Node
+Petal Width
+0.8
+Branch Node
+Sepal Length
+5.0
+Branch Node
+Petal Length
+3.5
+Branch Node
+Sepal Width
+1.5
+Decision Node
+Iris-versicolor
+Branch Node
+Petal Length
+4.9
+Decision Node
+Iris-setosa
+Decision Node
+Iris-versicolor
+Decision Node
+Iris-virginica
+Branch Node
+Petal Width
+1.75
+Branch Node
+Sepal Length
+6.5
+Decision Node
+Iris-versicolor
+Branch Node
+Petal Length
+5.5
+Decision Node
+Iris-virginica
+Decision Node
+Iris-virginica
+Decision Node
+Iris-setosa

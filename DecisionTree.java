@@ -196,7 +196,7 @@ public class DecisionTree {
 			int good = 0;
 			int bad = 0;
 			for(int c = 0; c<s; c++) {//count each good and bad quality iris
-				if(set[c].getSpecies() == "setosa")
+				if(set[c].getSpecies().equals("setosa"))
 					good++;
 				else
 					bad++;
@@ -212,13 +212,13 @@ public class DecisionTree {
 		for(int i = 0; i<set.length; i++) {
 			if(atr.equals("Iris Species")) {
 				if(set[i].getSpecies().compareTo((String) value) < 0) {
-					if(set[i].getSpecies() == "setosa")
+					if(set[i].getSpecies().equals("setosa"))
 						leftBad++;
 					else
 						leftGood++;
 				}
 				else {
-					if(set[i].getSpecies() == "versicolor")
+					if(set[i].getSpecies().equals("versicolor"))
 						rightBad++;
 					else
 						rightGood++;
@@ -228,13 +228,13 @@ public class DecisionTree {
 				float getV = (float) set[i].getByName(atr);
 				float cV = (float) value;
 				if(getV < cV) {
-					if(set[i].getSpecies() == "versicolor")
+					if(set[i].getSpecies().equals("versicolor"))
 						leftBad++;
 					else
 						leftGood++;
 				}
 				else {
-					if(set[i].getSpecies() == "versicolor")
+					if(set[i].getSpecies().equals("versicolor"))
 						rightBad++;
 					else
 						rightGood++;
@@ -256,6 +256,7 @@ public class DecisionTree {
 	}
 	
 	public String test(Iris w) {//test iris through tree
+
 		TreeNode p = root;
 		
 		while(p instanceof BranchNode) {//loop while p has children
@@ -294,11 +295,11 @@ public class DecisionTree {
 	private TreeNode readingTree(Scanner read) {
 		String s = read.nextLine();
 		
-		if(s.equals("branch node")) {//create branch node
+		if(s.equalsIgnoreCase("branch node")) {//create branch node
 			BranchNode b = new BranchNode();
 			s = read.nextLine();
 			b.setComparisonAttribute(s);
-			if(s.equals("Iris Species"))
+			if(s.equalsIgnoreCase("Iris-setosa")||s.equalsIgnoreCase("Iris-versicolor")||s.equalsIgnoreCase("Iris-virginica"))
 				b.setComparisonValue(read.nextLine());
 			else {
 				s = read.nextLine();
